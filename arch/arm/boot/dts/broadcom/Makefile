@@ -17,6 +17,11 @@ DTC_FLAGS_bcm2711-rpi-4-b := -@
 DTC_FLAGS_bcm2711-rpi-cm4-io := -@
 DTC_FLAGS_bcm2835-rpi-zero := -@
 DTC_FLAGS_bcm2835-rpi-zero-w := -@
+DTC_FLAGS_bcm2712-v3link-imx219-0-0 := -@
+DTC_FLAGS_bcm2712-v3link-imx219-0-1 := -@
+DTC_FLAGS_bcm2712-v3link-imx219-0-2 := -@
+DTC_FLAGS_bcm2712-v3link-imx219-0-3 := -@
+DTC_FLAGS_bcm2712-sk-v3link-fusion-0 := -@
 dtb-$(CONFIG_ARCH_BCM2835) += \
 	bcm2835-rpi-b.dtb \
 	bcm2835-rpi-a.dtb \
@@ -34,7 +39,13 @@ dtb-$(CONFIG_ARCH_BCM2835) += \
 	bcm2711-rpi-4-b.dtb \
 	bcm2711-rpi-cm4-io.dtb \
 	bcm2835-rpi-zero.dtb \
-	bcm2835-rpi-zero-w.dtb
+	
+	bcm2835-rpi-zero-w.dtb \
+	bcm2712-v3link-imx219-0-0.dtb \
+	bcm2712-v3link-imx219-0-1.dtb \
+	bcm2712-v3link-imx219-0-2.dtb \
+	bcm2712-v3link-imx219-0-3.dtb \
+	bcm2712-sk-v3link-fusion-0.dtb
 
 DTC_FLAGS_bcm2708-rpi-b := -@
 DTC_FLAGS_bcm2708-rpi-b-rev1 := -@

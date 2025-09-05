@@ -1,0 +1,95 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+
+&{/} {
+	clk_imx219_fixed_00: imx219-xclk-00 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <24000000>;
+	};
+};
+
+&{/axi/pcie@120000/rp1/i2c@80000/deser@30/ports} {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	/* FPDLink RX 0 */
+	port@0 {
+		reg = <0>;
+
+		ub960_fpd3_0_in: endpoint {
+			remote-endpoint = <&ub953_0_out>;
+		};
+	};
+};
+
+&{/axi/pcie@120000/rp1/i2c@80000/deser@30/links} {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	link@0 {
+		reg = <0>;
+		i2c-alias = <0x44>;
+
+		ti,rx-mode = <3>;
+
+		serializer: serializer {
+			compatible = "ti,ds90ub953-q1";
+			gpio-controller;
+			#gpio-cells = <2>;
+
+			#clock-cells = <0>;
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				port@0 {
+					reg = <0>;
+					ub953_0_in: endpoint {
+						clock-lanes = <0>;
+						data-lanes = <1 2>;
+						remote-endpoint = <&sensor_0_out>;
+					};
+				};
+
+				port@1 {
+					reg = <1>;
+
+					ub953_0_out: endpoint {
+						remote-endpoint = <&ub960_fpd3_0_in>;
+					};
+				};
+			};
+
+			i2c {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				sensor@10 {
+					compatible = "sony,imx219";
+					reg = <0x10>;
+
+					VANA-supply = <&cam1_reg>;	/* 2.8v */
+					VDIG-supply = <&cam_dummy_reg>;	/* 1.8v */
+					VDDL-supply = <&cam_dummy_reg>;	/* 1.2v */
+					
+					clocks = <&clk_imx219_fixed_00>;
+					clock-names = "xclk";
+					reset-gpios = <&serializer 1 GPIO_ACTIVE_HIGH>;
+
+					port {
+						sensor_0_out: endpoint {
+							remote-endpoint = <&ub953_0_in>;
+							link-frequencies = /bits/ 64 <456000000>;
+							clock-lanes = <0>;
+							data-lanes = <1 2>;
+						};
+					};
+				};
+			};
+		};
+	};
+};

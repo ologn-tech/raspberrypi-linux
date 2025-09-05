@@ -1,0 +1,73 @@
+// SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+/dts-v1/;
+/plugin/;
+
+/ {
+    fragment@0 {
+        target = <&i2c4>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "okay";
+
+            ds90ub960_0: deser@30 {
+                compatible = "ti,ds90ub960-q1";
+                reg = <0x30>;
+
+                clocks = <&clk_fusion_25M_fixed>;
+                clock-names = "refclk";
+
+                i2c-alias-pool = <0x44 0x45 0x46 0x47>;
+
+                ds90ub960_0_ports: ports {
+                    #address-cells = <1>;
+                    #size-cells = <0>;
+
+                    /* CSI-2 TX */
+                    port@4 {
+                        reg = <4>;
+                        ds90ub960_0_csi_out: endpoint {
+                            data-lanes = <1 2>;
+                            clock-lanes = <0>;
+                            link-frequencies = /bits/ 64 <800000000>;
+                            remote-endpoint = <&csi1_in>;
+                        };
+                    };
+                };
+
+                ds90ub960_0_links: links {
+                    #address-cells = <1>;
+                    #size-cells = <0>;
+                };
+            };
+        };
+    };
+
+    // create clock for DS90UB960 deserializer
+    fragment@1 {
+        target-path = "/";
+        __overlay__ {
+            clk_fusion_25M_fixed: fixed-clock-25m {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <25000000>;
+            };
+        };
+    };
+
+    // enable CSI-1 and connect to DS90UB960
+    fragment@2 {
+        target = <&csi1>;
+        __overlay__ {
+            status = "okay";
+            
+            port {
+                csi1_in: endpoint {
+                    data-lanes = <1 2>;
+                    clock-lanes = <0>;
+                    remote-endpoint = <&ds90ub960_0_csi_out>;
+                };
+            };
+        };
+    };
+};

@@ -1190,6 +1190,10 @@ static int imx219_identify_module(struct imx219 *imx219)
 	u64 val;
 
 	ret = cci_read(imx219->regmap, IMX219_REG_CHIP_ID, &val, NULL);
+	msleep(10);
+	ret = cci_read(imx219->regmap, IMX219_REG_CHIP_ID+1, &val, NULL);
+	msleep(10);
+	ret = cci_read(imx219->regmap, IMX219_REG_CHIP_ID, &val, NULL);
 	if (ret) {
 		dev_err(&client->dev, "failed to read chip id %x\n",
 			IMX219_CHIP_ID);
