@@ -1,0 +1,366 @@
+// SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target = <&i2c0if>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@1 {
+		target = <&i2c0mux>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@2 {
+		target = <&i2c_csi_dsi>;
+		__overlay__ {
+			status = "okay";
+
+			ds90ub960: ds90ub960@30 {
+				status = "okay";
+				compatible = "ti,ds90ub960-q1";
+				reg = <0x30>;
+				clocks = <&clk_fusion_25M_fixed>;
+				clock-names = "refclk";
+				i2c-alias-pool = <0x48 0x49 0x4a 0x4b>;
+
+				ports {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					port@0 {
+						reg = <0>;
+
+						ub960_fpd3_0_in: endpoint {
+							remote-endpoint = <&ub953_0_out>;
+						};
+					};
+
+					port@1 {
+						reg = <1>;
+
+						ub960_fpd3_1_in: endpoint {
+							remote-endpoint = <&ub953_1_out>;
+						};
+					};
+
+					port@2 {
+						reg = <2>;
+
+						ub960_fpd3_2_in: endpoint {
+							remote-endpoint = <&ub953_2_out>;
+						};
+					};
+
+					port@3 {
+						reg = <3>;
+
+						ub960_fpd3_3_in: endpoint {
+							remote-endpoint = <&ub953_3_out>;
+						};
+					};
+
+					port@4 {
+						reg = <4>;
+
+						ds90ub960_out: endpoint {
+							remote-endpoint = <&csi1_in>;
+							data-lanes = <1 2>;
+							link-frequencies = /bits/ 64 <400000000>;
+						};
+					};
+				};
+
+				links {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					/* Link 0 has DS90UB953 serializer and IMX219 sensor */
+
+					link@0 {
+						reg = <0>;
+						i2c-alias = <0x44>;
+
+						ti,rx-mode = <3>;
+						ti,bc-gpio = <0>;
+
+						serializer0: serializer {
+							compatible = "ti,ds90ub953-q1";
+
+							gpio-controller;
+							#gpio-cells = <2>;
+							#clock-cells = <0>;
+
+							ports {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								port@0 {
+									reg = <0>;
+
+									ub953_0_in: endpoint {
+										data-lanes = <1 2>;
+										remote-endpoint = <&sensor_0_out>;
+									};
+								};
+
+								port@1 {
+									reg = <1>;
+
+									ub953_0_out: endpoint {
+										remote-endpoint = <&ub960_fpd3_0_in>;
+									};
+								};
+							};
+
+							i2c {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								sensor@10 {
+									compatible = "sony,imx219";
+									reg = <0x10>;
+									clocks = <&clk_fusion_24M_fixed>;
+									clock-names = "xclk";
+
+									port {
+										sensor_0_out: endpoint {
+											remote-endpoint = <&ub953_0_in>;
+											data-lanes = <1 2>;
+											link-frequencies = /bits/ 64 <456000000>;
+										};
+									};
+								};
+							};
+						};
+					};
+
+					/* Link 1 has DS90UB953 serializer and IMX219 sensor */
+
+					link@1 {
+						reg = <1>;
+						i2c-alias = <0x45>;
+
+						ti,rx-mode = <3>;
+						ti,bc-gpio = <0>;
+
+						serializer1: serializer {
+							compatible = "ti,ds90ub953-q1";
+
+							gpio-controller;
+							#gpio-cells = <2>;
+							#clock-cells = <0>;
+
+							ports {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								port@0 {
+									reg = <0>;
+
+									ub953_1_in: endpoint {
+										data-lanes = <1 2>;
+										remote-endpoint = <&sensor_1_out>;
+									};
+								};
+
+								port@1 {
+									reg = <1>;
+
+									ub953_1_out: endpoint {
+										remote-endpoint = <&ub960_fpd3_1_in>;
+									};
+								};
+							};
+
+							i2c {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								sensor@10 {
+									compatible = "sony,imx219";
+									reg = <0x10>;
+									clocks = <&clk_fusion_24M_fixed>;
+									clock-names = "xclk";
+
+									port {
+										sensor_1_out: endpoint {
+											remote-endpoint = <&ub953_1_in>;
+											data-lanes = <1 2>;
+											link-frequencies = /bits/ 64 <456000000>;
+										};
+									};
+								};
+							};
+						};
+					};
+
+					/* Link 2 has DS90UB953 serializer and IMX219 sensor */
+
+					link@2 {
+						reg = <2>;
+						i2c-alias = <0x46>;
+
+						ti,rx-mode = <3>;
+						ti,bc-gpio = <0>;
+
+						serializer2: serializer {
+							compatible = "ti,ds90ub953-q1";
+
+							gpio-controller;
+							#gpio-cells = <2>;
+							#clock-cells = <0>;
+
+							ports {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								port@0 {
+									reg = <0>;
+
+									ub953_2_in: endpoint {
+										data-lanes = <1 2>;
+										remote-endpoint = <&sensor_2_out>;
+									};
+								};
+
+								port@1 {
+									reg = <1>;
+
+									ub953_2_out: endpoint {
+										remote-endpoint = <&ub960_fpd3_2_in>;
+									};
+								};
+							};
+
+							i2c {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								sensor@10 {
+									compatible = "sony,imx219";
+									reg = <0x10>;
+									clocks = <&clk_fusion_24M_fixed>;
+									clock-names = "xclk";
+
+									port {
+										sensor_2_out: endpoint {
+											remote-endpoint = <&ub953_2_in>;
+											data-lanes = <1 2>;
+											link-frequencies = /bits/ 64 <456000000>;
+										};
+									};
+								};
+							};
+						};
+					};
+
+					/* Link 3 has DS90UB953 serializer and IMX219 sensor */
+
+					link@3 {
+						reg = <3>;
+						i2c-alias = <0x47>;
+
+						ti,rx-mode = <3>;
+						ti,bc-gpio = <0>;
+
+						serializer3: serializer {
+							compatible = "ti,ds90ub953-q1";
+
+							gpio-controller;
+							#gpio-cells = <2>;
+							#clock-cells = <0>;
+
+							ports {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								port@0 {
+									reg = <0>;
+
+									ub953_3_in: endpoint {
+										data-lanes = <1 2>;
+										remote-endpoint = <&sensor_3_out>;
+									};
+								};
+
+								port@1 {
+									reg = <1>;
+
+									ub953_3_out: endpoint {
+										remote-endpoint = <&ub960_fpd3_3_in>;
+									};
+								};
+							};
+
+							i2c {
+								#address-cells = <1>;
+								#size-cells = <0>;
+
+								sensor@10 {
+									compatible = "sony,imx219";
+									reg = <0x10>;
+									clocks = <&clk_fusion_24M_fixed>;
+									clock-names = "xclk";
+
+									port {
+										sensor_3_out: endpoint {
+											remote-endpoint = <&ub953_3_in>;
+											data-lanes = <1 2>;
+											link-frequencies = /bits/ 64 <456000000>;
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+
+	// create clock for DS90UB960 deserializer
+	fragment@3 {
+		target-path = "/";
+
+		__overlay__ {
+			clk_fusion_25M_fixed: fixed-clock-25m {
+				compatible = "fixed-clock";
+				#clock-cells = <0>;
+				clock-frequency = <25000000>;
+			};
+
+			clk_fusion_24M_fixed: fixed-clock-24m {
+				compatible = "fixed-clock";
+				#clock-cells = <0>;
+				clock-frequency = <24000000>;
+			};
+		};
+	};
+
+	// enable CSI-1 and connect to DS90UB960
+	fragment@4 {
+		target = <&csi1>;
+
+		__overlay__ {
+			status = "okay";
+			compatible = "brcm,bcm2835-unicam-upstream";
+
+			port {
+				csi1_in: endpoint {
+					remote-endpoint = <&ds90ub960_out>;
+					data-lanes = <1 2>;
+				};
+			};
+		};
+	};
+};
