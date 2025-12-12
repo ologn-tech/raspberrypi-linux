@@ -349,7 +349,6 @@
 
 		__overlay__ {
 			status = "okay";
-			compatible = "brcm,bcm2835-unicam-upstream";
 
 			port {
 				csi1_in: endpoint {
