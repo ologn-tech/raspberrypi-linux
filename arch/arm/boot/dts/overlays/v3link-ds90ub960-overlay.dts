@@ -85,7 +85,6 @@
 					#size-cells = <0>;
 
 					/* Link 0 has DS90UB953 serializer and IMX219 sensor */
-
 					link@0 {
 						reg = <0>;
 						i2c-alias = <0x44>;
@@ -145,7 +144,6 @@
 					};
 
 					/* Link 1 has DS90UB953 serializer and IMX219 sensor */
-
 					link@1 {
 						reg = <1>;
 						i2c-alias = <0x45>;
@@ -205,7 +203,6 @@
 					};
 
 					/* Link 2 has DS90UB953 serializer and IMX219 sensor */
-
 					link@2 {
 						reg = <2>;
 						i2c-alias = <0x46>;
@@ -265,7 +262,6 @@
 					};
 
 					/* Link 3 has DS90UB953 serializer and IMX219 sensor */
-
 					link@3 {
 						reg = <3>;
 						i2c-alias = <0x47>;

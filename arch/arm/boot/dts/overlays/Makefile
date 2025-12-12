@@ -359,7 +359,8 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	wittypi.dtbo \
 	wm8960-soundcard.dtbo \
 	ws2812-pio.dtbo \
-	v3link.dtbo
+	v3link-ds90ub960.dtbo \
+	v3link-ds90ub954.dtbo
 
 targets += dtbs dtbs_install
 targets += $(dtbo-y)
