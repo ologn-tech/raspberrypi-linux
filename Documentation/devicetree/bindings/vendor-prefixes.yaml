@@ -1411,6 +1411,8 @@ patternProperties:
     description: Semtech Corporation
   "^senseair,.*":
     description: Senseair AB
+  "^sensing-world,.*":
+    description: Shenzhen Sensing World Intelligent Technology Co., Ltd.
   "^sensirion,.*":
     description: Sensirion AG
   "^sensortek,.*":

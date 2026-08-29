@@ -3894,6 +3894,25 @@ Params: rotation                Mounting rotation of the camera sensor (0 or
                                 on the FSIN input pin.
 
 
+Name:   ox03j10-gmsl
+Info:   Sensing World OX03J10 GMSL2 camera module using MAX96717/MAX9296.
+        Uses Unicam 1, which is the standard camera connector on most Pi
+        variants.
+Load:   dtoverlay=ox03j10-gmsl,<param>=<val>
+Params: 2lane                   Use two CSI-2 data lanes instead of four.
+        max9296-addr            7-bit I2C address of the MAX9296 deserializer
+                                (default 0x48).
+        max96717-addr           7-bit I2C address of the MAX96717 serializer
+                                (default 0x40).
+        sensor-addr             7-bit I2C address of the OX03J10 SoC
+                                (default 0x36, vendor 8-bit 0x6c).
+        media-controller        Configure use of Media Controller API for
+                                configuring the bridge (default on)
+        cam0                    Adopt the default configuration for CAM0 on a
+                                Compute Module or Pi5 (CSI0, i2c_vc, and
+                                cam0_reg).
+
+
 Name:   papirus
 Info:   PaPiRus ePaper Screen by Pi Supply (both HAT and pHAT)
 Load:   dtoverlay=papirus,<param>=<val>

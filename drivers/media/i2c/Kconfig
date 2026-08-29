@@ -486,6 +486,20 @@ config VIDEO_OV02C10
 	  To compile this driver as a module, choose M here: the
 	  module will be called ov02c10.
 
+config VIDEO_OX03J10_GMSL
+	tristate "OmniVision OX03J10 GMSL2 camera bridge support"
+	depends on I2C && VIDEO_DEV
+	select MEDIA_CONTROLLER
+	select VIDEO_V4L2_SUBDEV_API
+	select V4L2_FWNODE
+	help
+	  This is a Video4Linux2 camera subdevice driver for OX03J10
+	  camera modules connected through a MAX96717 serializer and
+	  MAX9296 GMSL2 deserializer.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ox03j10-gmsl.
+
 config VIDEO_OV08D10
         tristate "OmniVision OV08D10 sensor support"
         help
